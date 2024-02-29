@@ -66,3 +66,12 @@ File "C:\YOUR_PATH\MAGE_MTE_MonitoringService.py", line 45, in <module>
     servicemanager.StartServiceCtrlDispatcher()
 pywintypes.error: (1063, 'StartServiceCtrlDispatcher', 'Le processus de service n’a pas pu se connecter au contrôleur de service.')
 ```
+
+
+
+
+list of all the problems encountered : 
+- sys.argv has two arguments when using launching exe with "start" and demo code was using len(sys.args)==1 to trigger the start of the code. Leading us to not seeing the problem.
+- Code not passing the servicemanager.StartServiceCtrlDispatcher() instruction. throws an error.
+- Service .exe will sometime timeout instantly when trying to start it instead of throwing the previously mentionned error.
+- The generated service .exe can be detected and deleted by the computeur antivirus.
