@@ -14,9 +14,10 @@ class MAGE_MTE_MonitoringService(win32serviceutil.ServiceFramework):
         '''
         Used to initialize the service utility. 
         '''
+        print("init")
         win32serviceutil.ServiceFramework.__init__(self, args)
         self.hWaitStop = win32event.CreateEvent(None, 0, 0, None)
-        socket.setdefaulttimeout(60)
+        socket.setdefaulttimeout(60000)
 
     def SvcStop(self):
         '''
@@ -34,7 +35,7 @@ class MAGE_MTE_MonitoringService(win32serviceutil.ServiceFramework):
         while rc != win32event.WAIT_OBJECT_0:
             with open('C:\\MAGE_MTE_MonitoringService.log', 'a') as f:
                 f.write('MAGE_MTE_MonitoringService running...\n')
-            #rc = win32event.WaitForSingleObject(self.hWaitStop, 10)
+            rc = win32event.WaitForSingleObject(self.hWaitStop, 10)
 
 
 if __name__ == '__main__':
@@ -44,29 +45,3 @@ if __name__ == '__main__':
         servicemanager.StartServiceCtrlDispatcher()
     else:
         win32serviceutil.HandleCommandLine(MAGE_MTE_MonitoringService)
-
-# import time
-# import random
-# from pathlib import Path
-# from SMWinservice import SMWinservice
-
-# class MAGE_MTE_MonitoringService(SMWinservice):
-#     _svc_name_ = "MAGE_MTE_MonitoringService"
-#     _svc_display_name_ = "MAGE_MTE_MonitoringService"
-#     _svc_description_ = "That's a great winservice! :)"
-
-#     def start(self):
-#         self.isrunning = True
-
-#     def stop(self):
-#         self.isrunning = False
-
-#     def main(self):
-#         i = 0
-#         while self.isrunning:
-#             with open('C:\\MAGE_MTE_MonitoringService.log', 'a') as f:
-#                 f.write('MAGE_MTE_MonitoringService running...\n')
-#             time.sleep(10)
-
-# if __name__ == '__main__':
-#     MAGE_MTE_MonitoringService.parse_command_line()
